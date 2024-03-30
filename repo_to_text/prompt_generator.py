@@ -75,5 +75,7 @@ $content
                         content=content,
                     )
             except Exception as e:
-                file_contents += f"Error reading {relative_path}: {e}\n\n"
+                file_contents += (
+                    f"File contents of  {relative_path} not included due to: {e}\n\n"
+                )
         return file_contents

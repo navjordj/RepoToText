@@ -25,7 +25,7 @@ class RepoToText:
         ".vscode",
         ".env",
     }
-    DEFAULT_IGNORE_FOLDERS = {".git", "*.egg-info"}
+    DEFAULT_IGNORE_FOLDERS = {".git", "*.egg-info", ".pytest_cache"}
 
     def __init__(
         self,
@@ -51,17 +51,22 @@ class RepoToText:
             with tempfile.TemporaryDirectory(prefix="repo_to_text_") as temp_dir:
                 self._clone_repo(repo_url, temp_dir)
                 included_files = self._collect_included_files(temp_dir)
+                prompt = self._create_prompt(included_files, temp_dir)
+
         elif self.source_type == "local":
             included_files = self._collect_included_files(self.source)
+            prompt = self._create_prompt(included_files, self.source)
 
+        return prompt
+
+    def _create_prompt(self, included_files, base_dir):
         tree = create_tree_structure(included_files)
         print_tree(tree)
 
         prompt_generator = PromptGenerator(
-            included_files, tree, self.source, repo_name=self.source
+            included_files, tree, base_dir, repo_name=self.source
         )
         prompt = prompt_generator.generate_prompt()
-
         return prompt
 
     def _clone_repo(self, repo_url: str, temp_dir: str):
