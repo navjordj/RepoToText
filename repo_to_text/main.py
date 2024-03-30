@@ -3,6 +3,7 @@ import tempfile
 from argparse import ArgumentParser
 import argparse
 from git import Repo
+import fnmatch
 
 
 # Assuming these are correctly implemented elsewhere
@@ -26,7 +27,7 @@ class RepoToText:
         ".vscode",
         ".env",
     }
-    DEFAULT_IGNORE_FOLDERS = {".git"}
+    DEFAULT_IGNORE_FOLDERS = {".git", "*.egg-info"}  # Add *.egg-info pattern here
 
     def __init__(
         self,
@@ -90,7 +91,10 @@ class RepoToText:
 
     def _should_ignore_folder(self, path: str) -> bool:
         folder_name = os.path.basename(path)
-        return folder_name in self.ignore_folders
+        # Check against each pattern in ignore_folders
+        return any(
+            fnmatch.fnmatch(folder_name, pattern) for pattern in self.ignore_folders
+        )
 
     def _is_included_folder(self, relative_path: str) -> bool:
         return any(folder in relative_path for folder in self.include_folders)
