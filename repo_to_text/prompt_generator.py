@@ -1,6 +1,6 @@
 import os
 from typing import Dict, Optional
-from string import Template  # Import the Template class
+from string import Template
 
 
 class PromptGenerator:
@@ -16,7 +16,6 @@ class PromptGenerator:
         tree_str = self._generate_tree_str(self.tree)
         file_contents = self._generate_file_contents()
 
-        # Define a template with placeholders for the tree and file contents
         main_template = Template(
             """
 # Structure of repository $repo_name
@@ -41,7 +40,7 @@ $file_contents
     ) -> str:
         tree_str = ""
         for key, value in tree.items():
-            if value:  # Directory
+            if value:
                 tree_str += f"{indent}├── {key}\n"
                 tree_str += self._generate_tree_str(value, indent + "│   ")
             else:  # File
@@ -50,7 +49,7 @@ $file_contents
 
     def _generate_file_contents(self) -> str:
         file_contents = ""
-        # Define a template for individual file contents
+
         file_template = Template(
             """
 ### File Name: $file_name
@@ -69,7 +68,7 @@ $content
                     content = file.read()
                     # Strip the base_dir from the file_path
                     display_path = os.path.relpath(file_path, start=self.base_dir)
-                    # Substitute the placeholders with the actual file details
+
                     file_contents += file_template.substitute(
                         file_name=os.path.basename(relative_path),
                         file_path=display_path,

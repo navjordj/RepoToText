@@ -5,8 +5,6 @@ import argparse
 from git import Repo
 import fnmatch
 
-
-# Assuming these are correctly implemented elsewhere
 from .tree import create_tree_structure, print_tree
 from .prompt_generator import PromptGenerator
 
@@ -27,7 +25,7 @@ class RepoToText:
         ".vscode",
         ".env",
     }
-    DEFAULT_IGNORE_FOLDERS = {".git", "*.egg-info"}  # Add *.egg-info pattern here
+    DEFAULT_IGNORE_FOLDERS = {".git", "*.egg-info"}
 
     def __init__(
         self,
