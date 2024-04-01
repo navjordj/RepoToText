@@ -14,7 +14,7 @@ RepoToText is a Python library designed to convert codebases into a single text 
 Before you can use RepoToText, you need to have Python installed on your system (Python 3.6 or newer is recommended). You can then install RepoToText using pip:
 
 ```sh
-pip install git+https://github.com/yourusername/RepoToText.git
+pip install git+https://github.com/navjordj/RepoToText.git
 ```
 ## Usage
 RepoToText can be used both as a standalone command-line (CLI) tool and as a library within other Python scripts.
