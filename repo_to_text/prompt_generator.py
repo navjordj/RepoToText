@@ -1,6 +1,7 @@
 import os
 from typing import Dict, Optional
 from string import Template
+import tqdm
 
 
 class PromptGenerator:
@@ -61,7 +62,7 @@ $content
 
             """
         )
-        for relative_path in self.file_paths:
+        for relative_path in tqdm.tqdm(self.file_paths):
             try:
                 file_path = os.path.join(self.base_dir, relative_path)
                 with open(file_path, "r") as file:

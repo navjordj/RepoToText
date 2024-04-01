@@ -148,6 +148,9 @@ def main() -> None:
     prompt = repo_to_text.run()
 
     if args.output_file:
+        # Create the directory for the output file if it doesn't exist
+        os.makedirs(os.path.dirname(args.output_file), exist_ok=True)
+
         with open(args.output_file, "w", encoding="utf-8") as file:
             file.write(prompt)
         print(f"Prompt written to {args.output_file}")
